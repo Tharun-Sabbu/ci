@@ -76,3 +76,61 @@ unclassified:
   location:
     adminAddress: 
     url: http://jenkins:8080
+jobs:
+  - script: >
+         import groovy.io.FileType;
+         def list = [];
+         def dir = new File('/jcas-sync/git-sync/jobs/');
+         dir.eachFileRecurse (FileType.FILES) {
+            def jobName = it.getName()
+            println (jobName)
+            def tmpscriptPath = "jobs/"+jobName
+            def jobParams = []
+            if (jobName.startsWith("Sync-")) {
+                  pipelineJob(jobName) {
+                    logRotator {
+                       numToKeep(5)
+                       daysToKeep(5)
+                    }                     
+                    parameters {
+                        stringParam('EVENT')
+                    }
+                    definition {
+                      cpsScm {
+                        scriptPath tmpscriptPath
+                        scm {
+                          git {
+                            remote {
+                              url "https://github.com/Tharun-Sabbu/ci.git"
+                              credentials "jenkins"
+                            }
+                            branch '*/master'
+                            extensions {}
+                          }
+                        }
+                      }
+                    }
+                  }
+            } else {
+                  pipelineJob(jobName) {
+                    definition {
+                      cpsScm {
+                        scriptPath tmpscriptPath
+                        scm {
+                          git {
+                            remote {
+                              url "https://github.com/Tharun-Sabbu/ci.git"
+                              credentials "jenkins"
+                            }
+                            branch '*/master'
+                            extensions {}
+                          }
+                        }
+                      }
+                    }
+                  }
+            }
+            if (!jenkins.model.Jenkins.instance.getItemByFullName('my-job')) {
+             //  queue(jobName)
+            }
+         }
