@@ -1,4 +1,5 @@
 jenkins:
+  slaveAgentPort: -1
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
@@ -22,6 +23,7 @@ jenkins:
       containerCapStr: "10"
       defaultsProviderTemplate: ""
       connectTimeout: "5"
+      webSocket: true
       readTimeout: "15"
       jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
       jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
