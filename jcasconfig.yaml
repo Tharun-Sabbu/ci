@@ -87,7 +87,7 @@ jobs:
          dir.eachFileRecurse (FileType.FILES) {
             def jobName = it.getName()
             print(jobName)
-            def generatedscriptPath = "/jcas-sync/git-sync/jobs/"+jobName
+            def generatedscriptPath = "jobs/"+jobName // script path in jekins job configuration
             if (jobName.startsWith("Sync-")) {
                   pipelineJob(jobName) {
                     logRotator {
