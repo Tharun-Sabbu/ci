@@ -79,13 +79,11 @@ unclassified:
 jobs:
   - script: >
          import groovy.io.FileType;
-         def list = [];
          def dir = new File('/jcas-sync/git-sync/jobs/');
          dir.eachFileRecurse (FileType.FILES) {
             def jobName = it.getName()
-            println (jobName)
-            def tmpscriptPath = "jobs/"+jobName
-            def jobParams = []
+            print(jobName)
+            def generatedscriptPath = "/jcas-sync/git-sync/jobs/"+jobName
             if (jobName.startsWith("Sync-")) {
                   pipelineJob(jobName) {
                     logRotator {
@@ -97,7 +95,7 @@ jobs:
                     }
                     definition {
                       cpsScm {
-                        scriptPath tmpscriptPath
+                        scriptPath generatedscriptPath
                         scm {
                           git {
                             remote {
@@ -105,7 +103,6 @@ jobs:
                               credentials "jenkins"
                             }
                             branch '*/master'
-                            extensions {}
                           }
                         }
                       }
@@ -123,14 +120,10 @@ jobs:
                               credentials "jenkins"
                             }
                             branch '*/master'
-                            extensions {}
                           }
                         }
                       }
                     }
                   }
-            }
-            if (!jenkins.model.Jenkins.instance.getItemByFullName('my-job')) {
-             //  queue(jobName)
             }
          }
