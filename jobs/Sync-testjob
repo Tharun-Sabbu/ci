@@ -1,36 +1,30 @@
 properties([
-            [
-            $class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
-            parameters
-            (
-                [
-                    choice(choices: ['opt1', 'opt2', 'opt3'], description: 'desc', name: 'bla'),
-                    choice(choices: script{return_list()}, description: 'some letter', name: 'ble')
-                ]
+    parameters([
+        choice(
+            choices: ['ONE', 'TWO'], 
+            name: 'PARAMETER_01'
+        ),
+        booleanParam(
+            defaultValue: true, 
+            description: '', 
+            name: 'BOOLEAN'
+        ),
+        text(
+            defaultValue: '''
+            this is a multi-line 
+            string parameter example
+            ''', 
+                name: 'MULTI-LINE-STRING'
+        ),
+        string(
+            defaultValue: 'scriptcrunch', 
+            name: 'STRING-PARAMETER', 
+            trim: true
         )
-    ]
- )
+    ])
+])
 
-pipeline {
-    agent{
-        label "Linux"
-    }
-
-    stages{
-        stage("frist"){
-            steps{
-                echo "${params.bla}"
-                echo "${params.ble}"
-            }
-        }
-    }
-}
-
-def return_list(){
-    if ("${JOB_NAME}".contains("bla")){
-        env.list_users = "1\n 2\n 3\n"
-    }else{
-        env.list_users = "a\n b\n c\n"
-    }
-    return env.list_users
+node('jenkins-jenkins-agent')
+{
+    print("test")
 }
