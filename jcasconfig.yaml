@@ -112,7 +112,7 @@ jobs:
                   pipelineJob(jobName) {
                     definition {
                       cpsScm {
-                        scriptPath tmpscriptPath
+                        scriptPath generatedscriptPath
                         scm {
                           git {
                             remote {
