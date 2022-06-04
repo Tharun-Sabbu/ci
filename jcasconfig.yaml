@@ -26,7 +26,7 @@ jenkins:
       webSocket: true
       readTimeout: "15"
       jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-      jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
+      # jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
       maxRequestsPerHostStr: "32"
       name: "kubernetes"
       namespace: "jenkins"
