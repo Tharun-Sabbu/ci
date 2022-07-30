@@ -48,12 +48,12 @@ jenkins:
                   key: "JENKINS_URL"
                   value: "http://jenkins.jenkins.svc.cluster.local:8080/"
             image: "jenkins/inbound-agent:4.11.2-4"
-            privileged: "false"
-            resourceLimitCpu: 512m
-            resourceLimitMemory: 512Mi
+            privileged: "true"
+            resourceLimitCpu: 2m
+            resourceLimitMemory: 5000Mi
             resourceRequestCpu: 512m
             resourceRequestMemory: 512Mi
-            runAsUser: 
+            runAsUser: 0
             #runAsGroup: 
             ttyEnabled: false
             workingDir: /home/jenkins/agent
